@@ -1,19 +1,30 @@
 import { db } from './firebase-config.js';
 import { ref, push, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-window.goToNext = (currentStepNum, inputId) => {
-    const inputVal = document.getElementById(inputId).value;
+// Global window binding to fix frozen Next button
+window.goToNext = function(currentStepNum, inputId) {
+    const inputElement = document.getElementById(inputId);
+    if (!inputElement) return;
+    
+    const inputVal = inputElement.value;
     if (inputVal.trim() === "") {
         alert("Please enter your details before clicking next.");
         return;
     }
-    document.getElementById('step-' + currentStepNum).classList.remove('active');
+    
+    const currentStep = document.getElementById('step-' + currentStepNum);
+    if (currentStep) currentStep.classList.remove('active');
+    
     let nextStepNum = currentStepNum + 1;
-    document.getElementById('step-' + nextStepNum).classList.add('active');
+    const nextStep = document.getElementById('step-' + nextStepNum);
+    if (nextStep) nextStep.classList.add('active');
 };
 
-window.submitData = async () => {
-    const classVal = document.getElementById('userClass').value;
+window.submitData = async function() {
+    const classInput = document.getElementById('userClass');
+    if (!classInput) return;
+    
+    const classVal = classInput.value;
     if (classVal.trim() === "") {
         alert("Please enter your class.");
         return;
@@ -24,8 +35,10 @@ window.submitData = async () => {
     const email = document.getElementById('userEmail').value;
     const submitBtn = document.getElementById('submitBtn');
 
-    submitBtn.innerText = "Saving...";
-    submitBtn.disabled = true;
+    if (submitBtn) {
+        submitBtn.innerText = "Saving...";
+        submitBtn.disabled = true;
+    }
 
     try {
         const responsesRef = ref(db, 'responses');
@@ -50,7 +63,9 @@ window.submitData = async () => {
     } catch (error) {
         console.error("Error saving data:", error);
         alert("An error occurred while submitting. Please try again.");
-        submitBtn.innerText = "Submit ✔";
-        submitBtn.disabled = false;
+        if (submitBtn) {
+            submitBtn.innerText = "Submit ✔";
+            submitBtn.disabled = false;
+        }
     }
 };
