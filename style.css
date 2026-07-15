@@ -5,7 +5,7 @@
     font-family: 'Poppins', sans-serif; 
 }
 
-body {
+html, body {
     background-color: #3b0005; 
     height: 100vh; 
     width: 100vw;
@@ -14,6 +14,7 @@ body {
     align-items: center;
     overflow: hidden; 
     position: relative;
+    perspective: 1200px;
 }
 
 .circle-black {
@@ -38,6 +39,7 @@ body {
     z-index: 1;
 }
 
+/* --- MAIN 3D GLASS SLAB CONTAINER --- */
 .glass-container {
     position: relative; 
     z-index: 10;
@@ -53,26 +55,69 @@ body {
     flex-direction: column; 
     justify-content: space-between;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    
+    /* 3D Flip Transition */
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.top-text { 
+.glass-container.even-flip .top-text,
+.glass-container.even-flip .bottom-text,
+.glass-container.even-flip .steps-wrapper {
+    transform: rotateY(180deg);
+}
+
+.top-text, .bottom-text { 
     display: flex; 
     justify-content: space-between; 
     color: #ffffff; 
     font-size: 11px; 
     letter-spacing: 0.5px; 
-    opacity: 0.9; 
+    opacity: 0.9;
 }
 .left-text { font-weight: 600; line-height: 1.3; }
 .right-text { font-style: italic; opacity: 0.8; }
 .bottom-text { color: #ffffff; font-size: 11px; font-weight: 600; opacity: 0.9; }
 
-.steps-wrapper { flex-grow: 1; display: flex; align-items: center; position: relative; }
-.step { display: none; width: 100%; animation: slideUp 0.4s ease forwards; }
-.step.active { display: block; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.steps-wrapper { 
+    flex-grow: 1; 
+    display: flex; 
+    align-items: center; 
+    position: relative; 
+}
 
-.main-heading { color: #ffffff; font-size: 44px; font-weight: 800; line-height: 1.05; letter-spacing: -1px; margin-bottom: 25px; }
+.step { 
+    display: none; 
+    width: 100%; 
+    animation: slideUp 0.4s ease forwards; 
+}
+
+.step.active { 
+    display: block; 
+}
+
+@keyframes slideUp { 
+    from { opacity: 0; transform: translateY(15px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+.main-heading { 
+    color: #ffffff; 
+    font-size: 44px; 
+    font-weight: 800; 
+    line-height: 1.05; 
+    letter-spacing: -1px; 
+    margin-bottom: 25px; 
+    display: inline-block;
+    user-select: none;
+    cursor: pointer;
+}
+
+.scatter-letter {
+    display: inline-block;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease;
+}
 
 .glass-input {
     width: 100%; 
@@ -107,24 +152,59 @@ body {
 .result-box p { color: #ffffff; font-size: 14px; margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 5px; }
 .result-box strong { float: right; font-weight: 600; }
 
-/* Admin Panel Special View */
+/* --- LUXURY CIRCULAR GLASS ADMIN BUTTON --- */
 .admin-login-btn {
-    position: absolute; top: 20px; right: 20px; z-index: 100;
-    background: transparent; color: #fff; border: 1px solid #fff;
-    padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 12px;
+    position: absolute; 
+    top: 24px; 
+    right: 24px; 
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.03); 
+    color: rgba(255, 255, 255, 0.85); 
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    width: 44px; 
+    height: 44px; 
+    border-radius: 50%; 
+    cursor: pointer;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.admin-login-btn:hover { background: rgba(255,255,255,0.1); }
+
+.admin-login-btn:hover { 
+    background: rgba(255, 255, 255, 0.1); 
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(227, 0, 27, 0.15);
+}
+
+.admin-login-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.admin-login-btn:hover svg {
+    transform: scale(1.05);
+}
 
 .hidden-panel { display: none !important; }
 
 #admin-dashboard {
     width: 90%; max-width: 800px; height: 85vh; justify-content: flex-start;
     overflow-y: auto; color: #fff;
+    transform: none !important;
 }
 #admin-dashboard::-webkit-scrollbar { width: 6px; }
 #admin-dashboard::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
 
-.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.admin-profile-info { display: flex; align-items: center; gap: 10px; }
+.admin-profile-info img { width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid #fff; object-fit: cover; }
+.admin-profile-info span { font-size: 14px; font-weight: 600; color: #fff; }
+
 .admin-controls { display: flex; gap: 10px; margin-bottom: 20px; align-items: flex-end; }
 .admin-controls .glass-input { margin-bottom: 0; }
 .admin-btn { padding: 6px 12px; font-size: 12px; }
@@ -132,12 +212,28 @@ body {
 .response-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; }
 .response-card {
     background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px; padding: 15px; position: relative;
+    border-radius: 12px; padding: 15px; position: relative; cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
 }
-.response-card p { font-size: 12px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 3px;}
+.response-card:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.08); }
+.response-card p { font-size: 12px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .response-card strong { color: #fff; opacity: 0.9; }
+
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    z-index: 200; display: flex; justify-content: center; align-items: center;
+}
+.modal-content {
+    width: 90%; max-width: 440px; height: auto; min-height: 380px; justify-content: flex-start;
+    animation: slideUp 0.3s ease forwards;
+    transform: none !important;
+}
+.modal-body { margin-top: 20px; width: 100%; }
+.modal-body p { color: #ffffff; font-size: 15px; margin-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px; }
+.modal-body strong { float: right; font-weight: 600; color: #fff; }
 .delete-btn {
-    background: #e3001b; color: white; border: none; padding: 5px 10px;
-    border-radius: 5px; cursor: pointer; font-size: 11px; margin-top: 10px; width: 100%;
+    background: #e3001b; color: white; border: none; padding: 10px;
+    border-radius: 8px; cursor: pointer; font-size: 13px; margin-top: 20px; width: 100%; font-weight: 600;
 }
 .delete-btn:hover { background: #8a0011; }

@@ -9,7 +9,13 @@
 </head>
 <body>
 
-    <button class="admin-login-btn" id="admin-login-btn" onclick="window.adminLogin()">Admin Sign In</button>
+    <button class="admin-login-btn" id="admin-login-btn" onclick="window.adminLogin()" title="Admin Sign In">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            <circle cx="12" cy="16" r="1.5"></circle>
+        </svg>
+    </button>
 
     <div class="circle-black"></div>
     <div class="circle-red"></div>
@@ -23,25 +29,25 @@
         <div class="steps-wrapper">
             <div class="step active" id="step-1">
                 <h1 class="main-heading">Hello,<br>What is your<br>Name?</h1>
-                <input type="text" id="userName" class="glass-input" placeholder="e.g. Zero" autocomplete="off">
+                <input type="text" id="userName" class="glass-input" placeholder="e.g. Zero" autocomplete="off" onkeydown="if(event.key === 'Enter') window.goToNext(1, 'userName')">
                 <button class="next-btn" onclick="window.goToNext(1, 'userName')">Next ➔</button>
             </div>
 
             <div class="step" id="step-2">
                 <h1 class="main-heading">Great,<br>Your Mobile<br>Number.</h1>
-                <input type="tel" id="userMobile" class="glass-input" placeholder="e.g. 1234567890" autocomplete="off">
+                <input type="tel" id="userMobile" class="glass-input" placeholder="e.g. 1234567890" autocomplete="off" onkeydown="if(event.key === 'Enter') window.goToNext(2, 'userMobile')">
                 <button class="next-btn" onclick="window.goToNext(2, 'userMobile')">Next ➔</button>
             </div>
 
             <div class="step" id="step-3">
                 <h1 class="main-heading">Awesome,<br>Your<br>Email.</h1>
-                <input type="email" id="userEmail" class="glass-input" placeholder="e.g. zero@example.com" autocomplete="off">
+                <input type="email" id="userEmail" class="glass-input" placeholder="e.g. zero@example.com" autocomplete="off" onkeydown="if(event.key === 'Enter') window.goToNext(3, 'userEmail')">
                 <button class="next-btn" onclick="window.goToNext(3, 'userEmail')">Next ➔</button>
             </div>
 
             <div class="step" id="step-4">
                 <h1 class="main-heading">Lastly,<br>Your<br>Class.</h1>
-                <input type="text" id="userClass" class="glass-input" placeholder="e.g. BCA / 10th" autocomplete="off">
+                <input type="text" id="userClass" class="glass-input" placeholder="e.g. BCA / 10th" autocomplete="off" onkeydown="if(event.key === 'Enter') window.submitData()">
                 <button class="next-btn" id="submitBtn" onclick="window.submitData()">Submit ✔</button>
             </div>
 
@@ -58,13 +64,16 @@
         </div>
 
         <div class="bottom-text">
-            @_Taiwo_taiwo
+            @NexGenDigital.Technologies
         </div>
     </div>
 
     <div class="glass-container hidden-panel" id="admin-dashboard">
         <div class="admin-header">
-            <h2>Admin Dashboard</h2>
+            <div class="admin-profile-info">
+                <img id="admin-img" src="" alt="Profile Logo">
+                <span id="admin-display-name">Loading...</span>
+            </div>
             <button class="next-btn admin-btn" onclick="window.adminLogout()">Logout</button>
         </div>
         <p style="margin-bottom: 15px; opacity: 0.8;">Total Responses: <span id="total-count">0</span></p>
@@ -76,6 +85,17 @@
 
         <div class="response-grid" id="response-list">
             </div>
+    </div>
+
+    <div id="full-response-modal" class="modal-overlay hidden-panel">
+        <div class="glass-container modal-content">
+            <div class="admin-header">
+                <h2>Full Details</h2>
+                <button class="next-btn admin-btn" onclick="window.closeModal()">Close</button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+                </div>
+        </div>
     </div>
 
     <script type="module" src="firebase-config.js"></script>
