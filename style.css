@@ -1,0 +1,147 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #000000;
+    /* Adding a subtle gradient pattern to make the glass effect visible */
+    background-image: radial-gradient(circle at top right, #333333, #000000), 
+                      radial-gradient(circle at bottom left, #222222, #000000);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+}
+
+/* Glassmorphism Card (macOS Style) */
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    transition: all 0.4s ease;
+}
+
+/* macOS Window Controls */
+.mac-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close { background-color: #ff5f56; }
+.minimize { background-color: #ffbd2e; }
+.expand { background-color: #27c93f; }
+
+/* Typography & Layout */
+h2 {
+    font-weight: 500;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+input {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+input:focus {
+    border-color: #ffffff;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 14px;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s, transform 0.1s;
+}
+
+button:hover {
+    background: #e0e0e0;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.secondary-btn {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    margin-top: 25px;
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Profile Details Styling */
+.profile-details p {
+    font-size: 16px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-details p:last-child {
+    border-bottom: none;
+}
+
+.profile-details strong {
+    color: rgba(255, 255, 255, 0.6);
+    display: inline-block;
+    width: 80px;
+}
+
+/* Utility Class */
+.hidden {
+    display: none;
+}
