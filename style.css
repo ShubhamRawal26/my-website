@@ -1,186 +1,99 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
 body {
-    /* Deep maroon background to match the image vibe */
-    background-color: #380006; 
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-    color: #ffffff;
+    background-color: #3b0005; 
+    height: 100vh; width: 100vw;
+    display: flex; justify-content: center; align-items: center;
+    overflow: hidden; position: relative;
 }
 
-/* Background Geometric Circles */
-.bg-circle {
-    position: absolute;
-    border-radius: 50%;
-    z-index: 1;
+.circle-black {
+    position: absolute; width: 750px; height: 750px;
+    background-color: #050505; border-radius: 50%;
+    top: -250px; left: -150px; z-index: 1;
 }
 
-.bg-black {
-    width: 800px;
-    height: 800px;
-    background-color: #050505;
-    top: -300px;
-    left: -200px;
+.circle-red {
+    position: absolute; width: 900px; height: 900px;
+    background: radial-gradient(circle, #e3001b 0%, #8a0011 100%);
+    border-radius: 50%; bottom: -350px; right: -250px; z-index: 1;
 }
 
-.bg-red {
-    width: 900px;
-    height: 900px;
-    background: radial-gradient(circle, #e50020, #9c0015);
-    bottom: -400px;
-    right: -250px;
+.glass-container {
+    position: relative; z-index: 10;
+    width: 360px; height: 480px;
+    background: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px; padding: 30px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
-/* The Glass Card */
-.glass-card {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    max-width: 420px;
-    min-height: 520px;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-}
+.top-text { display: flex; justify-content: space-between; color: #ffffff; font-size: 11px; letter-spacing: 0.5px; opacity: 0.9; }
+.left-text { font-weight: 600; line-height: 1.3; }
+.right-text { font-style: italic; opacity: 0.8; }
+.bottom-text { color: #ffffff; font-size: 11px; font-weight: 600; opacity: 0.9; }
 
-/* Header (Top small texts) */
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    font-weight: 400;
-    opacity: 0.8;
-    letter-spacing: 0.5px;
-}
+.steps-wrapper { flex-grow: 1; display: flex; align-items: center; position: relative; }
+.step { display: none; width: 100%; animation: slideUp 0.4s ease forwards; }
+.step.active { display: block; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Footer (Bottom handle) */
-.card-footer {
-    font-size: 12px;
-    font-weight: 400;
-    opacity: 0.8;
-}
+.main-heading { color: #ffffff; font-size: 44px; font-weight: 800; line-height: 1.05; letter-spacing: -1px; margin-bottom: 25px; }
 
-/* Step Container & Form Elements */
-.form-container {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin: 40px 0;
+.glass-input {
+    width: 100%; background: transparent; border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff; font-size: 18px; padding: 8px 0;
+    margin-bottom: 25px; outline: none; transition: 0.3s;
 }
+.glass-input::placeholder { color: rgba(255, 255, 255, 0.4); font-weight: 400; }
+.glass-input:focus { border-bottom: 2px solid #ffffff; }
 
-.step {
-    display: none; /* Hidden by default */
-    width: 100%;
-    animation: fadeIn 0.5s ease;
+.next-btn {
+    background: #ffffff; color: #000000; border: none;
+    padding: 10px 20px; border-radius: 30px; font-size: 14px;
+    font-weight: 600; cursor: pointer; transition: 0.2s;
 }
+.next-btn:hover { background: #cccccc; }
+.restart-btn { background: transparent; color: #ffffff; border: 1px solid #ffffff; margin-top: 20px; }
+.restart-btn:hover { background: rgba(255, 255, 255, 0.1); }
 
-.step.active {
-    display: block; /* Only active step is shown */
-}
+.result-box p { color: #ffffff; font-size: 14px; margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 5px; }
+.result-box strong { float: right; font-weight: 600; }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* ADMIN PANEL STYLES */
+.admin-login-btn {
+    position: absolute; top: 20px; right: 20px; z-index: 100;
+    background: transparent; color: #fff; border: 1px solid #fff;
+    padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 12px;
 }
+.admin-login-btn:hover { background: rgba(255,255,255,0.1); }
 
-h1 {
-    font-size: 42px;
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 40px;
-}
+.hidden-panel { display: none !important; }
 
-input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-    color: #fff;
-    font-size: 20px;
-    padding: 10px 0;
-    margin-bottom: 40px;
-    outline: none;
-    transition: border-color 0.3s;
+#admin-dashboard {
+    width: 90%; max-width: 800px; height: 85vh; justify-content: flex-start;
+    overflow-y: auto; color: #fff;
 }
+#admin-dashboard::-webkit-scrollbar { width: 6px; }
+#admin-dashboard::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
 
-input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
-}
+.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.admin-controls { display: flex; gap: 10px; margin-bottom: 20px; align-items: flex-end; }
+.admin-controls .glass-input { margin-bottom: 0; }
+.admin-btn { padding: 6px 12px; font-size: 12px; }
 
-input:focus {
-    border-bottom: 2px solid #ffffff;
+.response-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; }
+.response-card {
+    background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px; padding: 15px; position: relative;
 }
-
-/* Buttons */
-.action-btn {
-    background: #ffffff;
-    color: #000000;
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-block;
+.response-card p { font-size: 12px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 3px;}
+.response-card strong { color: #fff; opacity: 0.9; }
+.delete-btn {
+    background: #e3001b; color: white; border: none; padding: 5px 10px;
+    border-radius: 5px; cursor: pointer; font-size: 11px; margin-top: 10px; width: 100%;
 }
-
-.action-btn:hover {
-    background: #e0e0e0;
-    transform: translateX(5px);
-}
-
-.submit-btn {
-    background: #e50020;
-    color: #ffffff;
-}
-
-.submit-btn:hover {
-    background: #ff1a3b;
-}
-
-.outline-btn {
-    background: transparent;
-    color: #ffffff;
-    border: 1px solid #ffffff;
-}
-
-.outline-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: none;
-}
-
-/* Result Screen */
-.result-details p {
-    font-size: 16px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 8px;
-}
-
-.result-details span {
-    opacity: 0.7;
-}
-
-.result-details strong {
-    font-weight: 600;
-}
+.delete-btn:hover { background: #8a0011; }

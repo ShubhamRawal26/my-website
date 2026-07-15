@@ -1,7 +1,7 @@
 import { auth } from './firebase-config.js';
 import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const ADMIN_EMAIL = "YOUR_ADMIN_GMAIL@gmail.com"; // इसे अपने एडमिन ईमेल से बदलें
+const ADMIN_EMAIL = "discountbuddyshubham@gmail.com"; // इसे अपने एडमिन ईमेल से बदलें
 
 const provider = new GoogleAuthProvider();
 const mainForm = document.getElementById('main-form-container');

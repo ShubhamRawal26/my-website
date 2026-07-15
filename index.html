@@ -3,63 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Glass Step Form</title>
+    <title>Designer Glass Form & Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="bg-circle bg-black"></div>
-    <div class="bg-circle bg-red"></div>
+    <button class="admin-login-btn" onclick="window.adminLogin()">Admin Sign In</button>
 
-    <div class="glass-card">
-        <div class="card-header">
-            <div class="header-left">You Are On<br>Currently</div>
-            <div class="header-right" id="step-indicator">Step 1/4</div>
+    <div class="circle-black"></div>
+    <div class="circle-red"></div>
+
+    <div class="glass-container" id="main-form-container">
+        <div class="top-text">
+            <span class="left-text">Glass<br>morphic effect</span>
+            <span class="right-text" id="step-count">Let's create</span>
         </div>
 
-        <div class="form-container">
+        <div class="steps-wrapper">
             <div class="step active" id="step-1">
-                <h1>Hello,<br>What is your<br>Name?</h1>
-                <input type="text" id="name" placeholder="e.g. Zero" autocomplete="off">
-                <button class="action-btn" onclick="nextStep(1)">Next ➔</button>
+                <h1 class="main-heading">Hello,<br>What is your<br>Name?</h1>
+                <input type="text" id="userName" class="glass-input" placeholder="e.g. Zero" autocomplete="off">
+                <button class="next-btn" onclick="window.goToNext(1, 'userName')">Next ➔</button>
             </div>
 
             <div class="step" id="step-2">
-                <h1>Great,<br>Your Mobile<br>Number?</h1>
-                <input type="tel" id="mobile" placeholder="e.g. 1234567890" autocomplete="off">
-                <button class="action-btn" onclick="nextStep(2)">Next ➔</button>
+                <h1 class="main-heading">Great,<br>Your Mobile<br>Number.</h1>
+                <input type="tel" id="userMobile" class="glass-input" placeholder="e.g. 1234567890" autocomplete="off">
+                <button class="next-btn" onclick="window.goToNext(2, 'userMobile')">Next ➔</button>
             </div>
 
             <div class="step" id="step-3">
-                <h1>Awesome,<br>What's your<br>Email?</h1>
-                <input type="email" id="email" placeholder="e.g. zero@example.com" autocomplete="off">
-                <button class="action-btn" onclick="nextStep(3)">Next ➔</button>
+                <h1 class="main-heading">Awesome,<br>Your<br>Email.</h1>
+                <input type="email" id="userEmail" class="glass-input" placeholder="e.g. zero@example.com" autocomplete="off">
+                <button class="next-btn" onclick="window.goToNext(3, 'userEmail')">Next ➔</button>
             </div>
 
             <div class="step" id="step-4">
-                <h1>Almost done,<br>Your<br>Class?</h1>
-                <input type="text" id="class" placeholder="e.g. 10th / BCA" autocomplete="off">
-                <button class="action-btn submit-btn" onclick="submitForm()">Submit ✔</button>
+                <h1 class="main-heading">Lastly,<br>Your<br>Class.</h1>
+                <input type="text" id="userClass" class="glass-input" placeholder="e.g. BCA / 10th" autocomplete="off">
+                <button class="next-btn" id="submitBtn" onclick="window.submitData()">Submit ✔</button>
             </div>
 
             <div class="step" id="step-result">
-                <h1 style="font-size: 28px; margin-bottom: 20px;">Profile<br>Complete.</h1>
-                <div class="result-details">
-                    <p><span>Name:</span> <strong id="res-name"></strong></p>
-                    <p><span>Mobile:</span> <strong id="res-mobile"></strong></p>
-                    <p><span>Email:</span> <strong id="res-email"></strong></p>
-                    <p><span>Class:</span> <strong id="res-class"></strong></p>
+                <h1 class="main-heading" style="font-size: 32px;">Profile<br>Completed.</h1>
+                <div class="result-box">
+                    <p>Name: <strong id="res-name"></strong></p>
+                    <p>Mobile: <strong id="res-mobile"></strong></p>
+                    <p>Email: <strong id="res-email"></strong></p>
+                    <p>Class: <strong id="res-class"></strong></p>
                 </div>
-                <button class="action-btn outline-btn" onclick="location.reload()">Restart</button>
+                <button class="next-btn restart-btn" onclick="location.reload()">Restart</button>
             </div>
         </div>
 
-        <div class="card-footer">
+        <div class="bottom-text">
             @NexGenDigital.Tech
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div class="glass-container hidden-panel" id="admin-dashboard">
+        <div class="admin-header">
+            <h2>Admin Dashboard</h2>
+            <button class="next-btn admin-btn" onclick="window.adminLogout()">Logout</button>
+        </div>
+        <p style="margin-bottom: 15px; opacity: 0.8;">Total Responses: <span id="total-count">0</span></p>
+        
+        <div class="admin-controls">
+            <input type="text" id="searchInput" class="glass-input" placeholder="Search by name or email..." onkeyup="window.searchResponses()">
+            <button class="next-btn admin-btn" onclick="window.fetchResponses()">Refresh</button>
+        </div>
+
+        <div class="response-grid" id="response-list">
+            </div>
+    </div>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="admin.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
