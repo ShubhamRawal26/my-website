@@ -1,43 +1,56 @@
-import { auth } from './firebase-config.js';
-import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { db } from './firebase-config.js';
+import { ref, push, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-const ADMIN_EMAIL = "YOUR_ADMIN_GMAIL@gmail.com"; // इसे अपने एडमिन ईमेल से बदलें
-
-const provider = new GoogleAuthProvider();
-const mainForm = document.getElementById('main-form-container');
-const adminDashboard = document.getElementById('admin-dashboard');
-
-window.adminLogin = () => {
-    signInWithPopup(auth, provider).catch((error) => {
-        console.error("Login failed:", error);
-    });
-};
-
-window.adminLogout = () => {
-    signOut(auth).then(() => {
-        alert("Logged out successfully.");
-    });
-};
-
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        if (user.email === ADMIN_EMAIL) {
-            // Authorized Admin
-            mainForm.classList.add('hidden-panel');
-            adminDashboard.classList.remove('hidden-panel');
-            document.querySelector('.admin-login-btn').style.display = 'none';
-            
-            // डैशबोर्ड लोड होने पर डेटा लाएं
-            if(window.fetchResponses) window.fetchResponses();
-        } else {
-            // Unauthorized Account
-            alert("Unauthorized Account! You do not have admin access.");
-            signOut(auth);
-        }
-    } else {
-        // Logged out / Normal User View
-        mainForm.classList.remove('hidden-panel');
-        adminDashboard.classList.add('hidden-panel');
-        document.querySelector('.admin-login-btn').style.display = 'block';
+window.goToNext = (currentStepNum, inputId) => {
+    const inputVal = document.getElementById(inputId).value;
+    if (inputVal.trim() === "") {
+        alert("Please enter your details before clicking next.");
+        return;
     }
-});
+    document.getElementById('step-' + currentStepNum).classList.remove('active');
+    let nextStepNum = currentStepNum + 1;
+    document.getElementById('step-' + nextStepNum).classList.add('active');
+};
+
+window.submitData = async () => {
+    const classVal = document.getElementById('userClass').value;
+    if (classVal.trim() === "") {
+        alert("Please enter your class.");
+        return;
+    }
+
+    const name = document.getElementById('userName').value;
+    const mobile = document.getElementById('userMobile').value;
+    const email = document.getElementById('userEmail').value;
+    const submitBtn = document.getElementById('submitBtn');
+
+    submitBtn.innerText = "Saving...";
+    submitBtn.disabled = true;
+
+    try {
+        const responsesRef = ref(db, 'responses');
+        const newResponseRef = push(responsesRef);
+        
+        await set(newResponseRef, {
+            name: name,
+            mobile: mobile,
+            email: email,
+            class: classVal,
+            submittedAt: serverTimestamp()
+        });
+
+        document.getElementById('res-name').innerText = name;
+        document.getElementById('res-mobile').innerText = mobile;
+        document.getElementById('res-email').innerText = email;
+        document.getElementById('res-class').innerText = classVal;
+
+        document.getElementById('step-4').classList.remove('active');
+        document.getElementById('step-result').classList.add('active');
+        document.getElementById('step-count').innerText = "Done!";
+    } catch (error) {
+        console.error("Error saving data:", error);
+        alert("An error occurred while submitting. Please try again.");
+        submitBtn.innerText = "Submit ✔";
+        submitBtn.disabled = false;
+    }
+};
