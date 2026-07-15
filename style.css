@@ -1,147 +1,186 @@
-/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-color: #000000;
-    /* Adding a subtle gradient pattern to make the glass effect visible */
-    background-image: radial-gradient(circle at top right, #333333, #000000), 
-                      radial-gradient(circle at bottom left, #222222, #000000);
+    /* Deep maroon background to match the image vibe */
+    background-color: #380006; 
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    position: relative;
     color: #ffffff;
 }
 
-.container {
-    width: 100%;
-    max-width: 450px;
-    padding: 20px;
-}
-
-/* Glassmorphism Card (macOS Style) */
-.glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-    transition: all 0.4s ease;
-}
-
-/* macOS Window Controls */
-.mac-controls {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.dot {
-    width: 12px;
-    height: 12px;
+/* Background Geometric Circles */
+.bg-circle {
+    position: absolute;
     border-radius: 50%;
+    z-index: 1;
 }
 
-.close { background-color: #ff5f56; }
-.minimize { background-color: #ffbd2e; }
-.expand { background-color: #27c93f; }
-
-/* Typography & Layout */
-h2 {
-    font-weight: 500;
-    margin-bottom: 25px;
-    letter-spacing: 1px;
-    text-align: center;
+.bg-black {
+    width: 800px;
+    height: 800px;
+    background-color: #050505;
+    top: -300px;
+    left: -200px;
 }
 
-.input-group {
-    margin-bottom: 20px;
+.bg-red {
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, #e50020, #9c0015);
+    bottom: -400px;
+    right: -250px;
 }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.7);
+/* The Glass Card */
+.glass-card {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 420px;
+    min-height: 520px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Header (Top small texts) */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+}
+
+/* Footer (Bottom handle) */
+.card-footer {
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+/* Step Container & Form Elements */
+.form-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 40px 0;
+}
+
+.step {
+    display: none; /* Hidden by default */
+    width: 100%;
+    animation: fadeIn 0.5s ease;
+}
+
+.step.active {
+    display: block; /* Only active step is shown */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 40px;
 }
 
 input {
     width: 100%;
-    padding: 12px 15px;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    color: #ffffff;
-    font-size: 16px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-size: 20px;
+    padding: 10px 0;
+    margin-bottom: 40px;
     outline: none;
-    transition: border 0.3s;
+    transition: border-color 0.3s;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
 }
 
 input:focus {
-    border-color: #ffffff;
-    background: rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid #ffffff;
 }
 
 /* Buttons */
-button {
-    width: 100%;
-    padding: 14px;
+.action-btn {
     background: #ffffff;
     color: #000000;
     border: none;
-    border-radius: 10px;
+    padding: 12px 24px;
     font-size: 16px;
     font-weight: 600;
+    border-radius: 50px;
     cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.3s, transform 0.1s;
+    transition: all 0.3s ease;
+    display: inline-block;
 }
 
-button:hover {
+.action-btn:hover {
     background: #e0e0e0;
+    transform: translateX(5px);
 }
 
-button:active {
-    transform: scale(0.98);
+.submit-btn {
+    background: #e50020;
+    color: #ffffff;
 }
 
-.secondary-btn {
+.submit-btn:hover {
+    background: #ff1a3b;
+}
+
+.outline-btn {
     background: transparent;
     color: #ffffff;
     border: 1px solid #ffffff;
-    margin-top: 25px;
 }
 
-.secondary-btn:hover {
+.outline-btn:hover {
     background: rgba(255, 255, 255, 0.1);
+    transform: none;
 }
 
-/* Profile Details Styling */
-.profile-details p {
+/* Result Screen */
+.result-details p {
     font-size: 16px;
     margin-bottom: 15px;
-    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
 }
 
-.profile-details p:last-child {
-    border-bottom: none;
+.result-details span {
+    opacity: 0.7;
 }
 
-.profile-details strong {
-    color: rgba(255, 255, 255, 0.6);
-    display: inline-block;
-    width: 80px;
-}
-
-/* Utility Class */
-.hidden {
-    display: none;
+.result-details strong {
+    font-weight: 600;
 }

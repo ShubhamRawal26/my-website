@@ -1,33 +1,52 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('user-form');
-    const formCard = document.getElementById('form-card');
-    const resultCard = document.getElementById('result-card');
-    const resetBtn = document.getElementById('reset-btn');
+// वर्तमान स्टेप को ट्रैक करने के लिए
+let currentStepNumber = 1;
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault(); // पेज को रीफ्रेश होने से रोकता है
+function nextStep(step) {
+    // वर्तमान इनपुट की वैल्यू चेक करना (ताकि खाली सबमिट न हो)
+    let currentInput;
+    if(step === 1) currentInput = document.getElementById('name').value;
+    if(step === 2) currentInput = document.getElementById('mobile').value;
+    if(step === 3) currentInput = document.getElementById('email').value;
 
-        // फॉर्म से डेटा लेना
-        const name = document.getElementById('name').value;
-        const mobile = document.getElementById('mobile').value;
-        const email = document.getElementById('email').value;
-        const userClass = document.getElementById('class').value;
+    if (currentInput.trim() === "") {
+        alert("Please fill out this field before moving to the next step.");
+        return;
+    }
 
-        // रिज़ल्ट कार्ड में डेटा सेट करना
-        document.getElementById('res-name').innerText = name;
-        document.getElementById('res-mobile').innerText = mobile;
-        document.getElementById('res-email').innerText = email;
-        document.getElementById('res-class').innerText = userClass;
+    // वर्तमान स्टेप को छुपाना
+    document.getElementById(`step-${step}`).classList.remove('active');
+    
+    // अगले स्टेप को दिखाना
+    let next = step + 1;
+    document.getElementById(`step-${next}`).classList.add('active');
 
-        // फॉर्म छुपाना और प्रीमियम कार्ड दिखाना
-        formCard.classList.add('hidden');
-        resultCard.classList.remove('hidden');
-    });
+    // हेडर में स्टेप इंडिकेटर अपडेट करना
+    document.getElementById('step-indicator').innerText = `Step ${next}/4`;
+}
 
-    // वापस जाने का बटन
-    resetBtn.addEventListener('click', () => {
-        form.reset(); // फॉर्म क्लियर करना
-        resultCard.classList.add('hidden');
-        formCard.classList.remove('hidden');
-    });
-});
+function submitForm() {
+    const userClass = document.getElementById('class').value;
+    
+    if (userClass.trim() === "") {
+        alert("Please fill out this field.");
+        return;
+    }
+
+    // सभी वैल्यूज़ को इकट्ठा करना
+    const name = document.getElementById('name').value;
+    const mobile = document.getElementById('mobile').value;
+    const email = document.getElementById('email').value;
+
+    // रिज़ल्ट स्क्रीन पर डेटा सेट करना
+    document.getElementById('res-name').innerText = name;
+    document.getElementById('res-mobile').innerText = mobile;
+    document.getElementById('res-email').innerText = email;
+    document.getElementById('res-class').innerText = userClass;
+
+    // आखिरी स्टेप को छुपाकर रिज़ल्ट दिखाना
+    document.getElementById('step-4').classList.remove('active');
+    document.getElementById('step-result').classList.add('active');
+    
+    // हेडर टेक्स्ट अपडेट करना
+    document.getElementById('step-indicator').innerText = "Complete";
+}

@@ -3,57 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Glass Form</title>
+    <title>Premium Glass Step Form</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
-        <div class="glass-card" id="form-card">
-            <div class="mac-controls">
-                <span class="dot close"></span>
-                <span class="dot minimize"></span>
-                <span class="dot expand"></span>
-            </div>
-            <h2>Your Information</h2>
-            <form id="user-form">
-                <div class="input-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="Zero" required>
-                </div>
-                <div class="input-group">
-                    <label for="mobile">Mobile Number</label>
-                    <input type="tel" id="mobile" placeholder="1234567890" required>
-                </div>
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="zero@example.com" required>
-                </div>
-                <div class="input-group">
-                    <label for="class">Class</label>
-                    <input type="text" id="class" placeholder="e.g. 10th / BCA" required>
-                </div>
-                <button type="submit">Submit</button>
-            </form>
+    <div class="bg-circle bg-black"></div>
+    <div class="bg-circle bg-red"></div>
+
+    <div class="glass-card">
+        <div class="card-header">
+            <div class="header-left">Glass<br>morphic effect</div>
+            <div class="header-right" id="step-indicator">Step 1/4</div>
         </div>
 
-        <div class="glass-card hidden" id="result-card">
-            <div class="mac-controls">
-                <span class="dot close"></span>
-                <span class="dot minimize"></span>
-                <span class="dot expand"></span>
+        <div class="form-container">
+            <div class="step active" id="step-1">
+                <h1>Hello,<br>What is your<br>Name?</h1>
+                <input type="text" id="name" placeholder="e.g. Zero" autocomplete="off">
+                <button class="action-btn" onclick="nextStep(1)">Next ➔</button>
             </div>
-            <h2>Premium Profile</h2>
-            <div class="profile-details">
-                <p><strong>Name:</strong> <span id="res-name"></span></p>
-                <p><strong>Mobile:</strong> <span id="res-mobile"></span></p>
-                <p><strong>Email:</strong> <span id="res-email"></span></p>
-                <p><strong>Class:</strong> <span id="res-class"></span></p>
+
+            <div class="step" id="step-2">
+                <h1>Great,<br>Your Mobile<br>Number?</h1>
+                <input type="tel" id="mobile" placeholder="e.g. 1234567890" autocomplete="off">
+                <button class="action-btn" onclick="nextStep(2)">Next ➔</button>
             </div>
-            <button id="reset-btn" class="secondary-btn">Go Back</button>
+
+            <div class="step" id="step-3">
+                <h1>Awesome,<br>What's your<br>Email?</h1>
+                <input type="email" id="email" placeholder="e.g. zero@example.com" autocomplete="off">
+                <button class="action-btn" onclick="nextStep(3)">Next ➔</button>
+            </div>
+
+            <div class="step" id="step-4">
+                <h1>Almost done,<br>Your<br>Class?</h1>
+                <input type="text" id="class" placeholder="e.g. 10th / BCA" autocomplete="off">
+                <button class="action-btn submit-btn" onclick="submitForm()">Submit ✔</button>
+            </div>
+
+            <div class="step" id="step-result">
+                <h1 style="font-size: 28px; margin-bottom: 20px;">Profile<br>Complete.</h1>
+                <div class="result-details">
+                    <p><span>Name:</span> <strong id="res-name"></strong></p>
+                    <p><span>Mobile:</span> <strong id="res-mobile"></strong></p>
+                    <p><span>Email:</span> <strong id="res-email"></strong></p>
+                    <p><span>Class:</span> <strong id="res-class"></strong></p>
+                </div>
+                <button class="action-btn outline-btn" onclick="location.reload()">Restart</button>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            @_Your_Handle
         </div>
     </div>
-    <link rel="stylesheet" href="style.css">
+
     <script src="script.js"></script>
 </body>
 </html>
